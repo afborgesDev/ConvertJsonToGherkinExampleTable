@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasteJsonAsTable", "PasteJsonAsTable.csproj", "{8BF344A3-CFD8-4108-8097-AF19989BBF2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasteJsonAsTable.Test", "..\PasteJsonAsTable.Test\PasteJsonAsTable.Test.csproj", "{76A5F379-ECA3-4268-AB4E-E3847D11564A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BF344A3-CFD8-4108-8097-AF19989BBF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF344A3-CFD8-4108-8097-AF19989BBF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF344A3-CFD8-4108-8097-AF19989BBF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF344A3-CFD8-4108-8097-AF19989BBF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A5F379-ECA3-4268-AB4E-E3847D11564A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A5F379-ECA3-4268-AB4E-E3847D11564A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A5F379-ECA3-4268-AB4E-E3847D11564A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A5F379-ECA3-4268-AB4E-E3847D11564A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {807B6B1C-AE19-4159-8907-2FA3F41D26D6}
+	EndGlobalSection
+EndGlobal
