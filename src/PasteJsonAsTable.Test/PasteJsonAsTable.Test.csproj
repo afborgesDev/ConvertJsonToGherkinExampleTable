@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PasteJsonAsTable\PasteJsonAsTable.csproj" />
+    <ProjectReference Include="..\PasteJsonAsTable.Core\PasteJsonAsTable.Core.csproj" />
   </ItemGroup>
 
 </Project>
