@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using PasteJsonAsTable.Core.TableConverter;
-using System;
 using System.Collections.Generic;
 
 namespace PasteJsonAsTable.Core.JsonParser
@@ -30,7 +29,7 @@ namespace PasteJsonAsTable.Core.JsonParser
                     return false;
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
