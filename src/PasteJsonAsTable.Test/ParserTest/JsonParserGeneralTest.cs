@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using PasteJsonAsTable.Core.JsonParser;
-using System;
 using Xunit;
 
 namespace PasteJsonAsTable.Test.ParserTest
