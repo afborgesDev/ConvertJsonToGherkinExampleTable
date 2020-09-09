@@ -109,3 +109,6 @@ csharp_space_between_method_call_empty_parameter_list_parentheses = false:warnin
 #Wrapping options
 csharp_preserve_single_line_blocks = true:suggestion
 csharp_preserve_single_line_statements = true:warning
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none

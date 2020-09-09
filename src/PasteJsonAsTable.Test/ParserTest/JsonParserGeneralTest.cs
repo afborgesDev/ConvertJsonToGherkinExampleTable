@@ -47,10 +47,20 @@ namespace PasteJsonAsTable.Test.ParserTest
             AssertValidTable(expectedTable, sut);
         }
 
+        [Fact]
+        public void ParseJsonWithInsideSimpleObjectSouldReturnAllItemsFlattedToValidTable()
+        {
+            const string payload = "{\"Name\": \"This is a test\", \"Basket\": { \"IsEmpty\": true, \"IsFromRefound\": false }}";
+            var expectedTable = $"|Name|Basket.IsEmpty|Basket.IsFromRefound|{Environment.NewLine}|This is a test|True|False|";
+
+            var sut = Parser.Parse(payload);
+            AssertValidTable(expectedTable, sut);
+        }
+
         private static void AssertValidTable(string ExpectedTableResult, string sut)
         {
             sut.Should().NotBeNullOrEmpty();
-            sut.Should().Be(ExpectedTableResult);
+            sut.Should().BeEquivalentTo(ExpectedTableResult);
         }
     }
 }
