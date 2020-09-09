@@ -34,6 +34,21 @@ namespace PasteJsonAsTable.Test.ParserTest
             var ExpectedTableResult = $"|name|Age|{Environment.NewLine}|this is a test|33|";
 
             var sut = Parser.Parse("{\"name\":\"this is a test\", \"Age\":33}");
+            AssertValidTable(ExpectedTableResult, sut);
+        }
+
+        [Fact]
+        public void ParseJsonWithArrayInsideShouldReturnValidTableWithListForTheArrayCollumn()
+        {
+            const string payload = "{\"name\":\"this is a test\", \"DaysPerWeekWorkOut\":[\"Sunday\", \"Wendsday\", \"Friday\"]}";
+            var expectedTable = $"|name|DaysPerWeekWorkOut|{Environment.NewLine}|this is a test|Sunday,Wendsday,Friday|";
+
+            var sut = Parser.Parse(payload);
+            AssertValidTable(expectedTable, sut);
+        }
+
+        private static void AssertValidTable(string ExpectedTableResult, string sut)
+        {
             sut.Should().NotBeNullOrEmpty();
             sut.Should().Be(ExpectedTableResult);
         }
