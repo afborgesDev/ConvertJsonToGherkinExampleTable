@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore src/PasteJsonAsTable.sln
+      run: dotnet restore src/ConvertJsonToGherkinExampleTable.sln
     - name: Build
       run: dotnet build src/PasteJsonAsTable.Core/ --configuration Release --no-restore
     - name: Test
