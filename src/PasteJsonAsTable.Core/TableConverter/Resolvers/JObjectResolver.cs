@@ -27,18 +27,6 @@ namespace PasteJsonAsTable.Core.TableConverter.Resolvers
             return builder.ToString();
         }
 
-        public static string ResolveValues(object item)
-        {
-            ValidateEntry(item, out var token);
-            var builder = new StringBuilder();
-
-            foreach (JProperty interItem in token)
-                builder.Append(interItem.Value.ToString()).Append(Converter.DefaultColumnSeparator);
-
-            builder.Remove(builder.Length - 1, 1);
-            return builder.ToString();
-        }
-
         private static void ValidateEntry(object item, out JToken token)
         {
             if (item is null)

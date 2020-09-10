@@ -68,19 +68,6 @@ namespace PasteJsonAsTable.Core.TableConverter
             return JObjectResolver.ResolveHeaders(jsonField.Key, jsonField.Value);
         }
 
-        private static string ConvertJsonValueToString(KeyValuePair<string, object> jsonField)
-        {
-            var valueType = jsonField.Value.GetType();
-
-            if (valueType.IsJArray())
-                return JArrayResolver.ResolveValue(jsonField.Value);
-
-            if (valueType.IsJObject())
-                return JObjectResolver.ResolveValues(jsonField.Value);
-
-            return jsonField.Value.ToString();
-        }
-
         private static string CleanCovertedText(string text) => text.Replace($"{DefaultColumnSeparator}{DefaultColumnSeparator}", DefaultColumnSeparator, StringComparison.InvariantCultureIgnoreCase);
     }
 }
