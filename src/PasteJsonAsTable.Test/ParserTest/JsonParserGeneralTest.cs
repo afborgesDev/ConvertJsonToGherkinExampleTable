@@ -1,7 +1,6 @@
 ﻿using System;
 using FluentAssertions;
 using PasteJsonAsTable.Core.JsonParser;
-using PasteJsonAsTable.Test.payloads;
 using Xunit;
 
 namespace PasteJsonAsTable.Test.ParserTest
@@ -67,6 +66,25 @@ namespace PasteJsonAsTable.Test.ParserTest
             var expectedTable = $"|Name|Configurations.IsActive|Configurations.ScheduledDays|LastUpdate|{Environment.NewLine}"
                               + $"|ComplexPayload|True|Monday,Saturday,Sunday|10/10/2022|";
             var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("ComplexPayloadArrayInsideObject"));
+            AssertValidTable(expectedTable, sut);
+        }
+
+        [Fact]
+        public void ParseComplexJsonWithMultipleInsideObjectAndArrayShouldReturnAllItemsFlattedToValidTable()
+        {
+            var expectedTable = $"|Name|Configurations.IsActive|Configurations.ScheduledDays|LastUpdate"
+                              + $"|UpdateInfo.Owner.FirstName|UpdateInfo.Owner.LastName|UpdateInfo.Owner.IsAdmin"
+                              + $"|UpdateInfo.PipeUpdated.Count|UpdateInfo.PipeUpdated.HasSomeError"
+                              + $"|UpdateInfo.PipeUpdated.ExecutionDetail.Log|{Environment.NewLine}"
+                              + "|ComplexPayload|True|Monday,Saturday,Sunday|10/10/2022|User|Beta|False"
+                              + "|2|False|Succeed,Succeed|";
+
+            ExecuteAndAssert(PayloadLoader.GetPayloadAsString("ComplexPayloadMultipleInsideArrayAndObject"), expectedTable);
+        }
+
+        private static void ExecuteAndAssert(string payload, string expectedTable)
+        {
+            var sut = Parser.Parse(payload);
             AssertValidTable(expectedTable, sut);
         }
 

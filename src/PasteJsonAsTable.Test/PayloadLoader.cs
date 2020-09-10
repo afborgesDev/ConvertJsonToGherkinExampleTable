@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace PasteJsonAsTable.Test.payloads
+namespace PasteJsonAsTable.Test
 {
     public static class PayloadLoader
     {
