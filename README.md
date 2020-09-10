@@ -1,11 +1,8 @@
 [![codecov](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable)
 
-# ConvertJsonToGherkinExampleTable
-This is a tool that allows pasting a JSON  as a table to the Gherkin Language
-
 # Supported type of Json Example:
 
-- Simple:
+- Simple:  
 Payload:  
 ```json
 {
@@ -19,7 +16,7 @@ Expected Table:
 | Name           | Age |
 | this is a test | 33  |
 ```
-
+---
 - Simple with array property:  
 Payload:  
 ```json
@@ -33,7 +30,7 @@ Expected Table:
 | Name           | DaysPerWeekWorkOut      |
 | this is a test | Sunday,Wendsday,Friday  |
 ```
-
+---
 - Simple with object property:  
 Payload: 
 ```json
@@ -50,7 +47,7 @@ Expected Table:
 | Name           | Basket.IsEmpty | Basket.IsFromRefound |
 | this is a test | True           | False                |
 ```
-
+---
 - Simple with array and object property:  
 Payload: 
 ```json
@@ -73,7 +70,7 @@ Expected Table:
 | Name           | References.IsActive | References.Load | DaysToLoad                       |
 | this is a test | True                | 90              | Monday,Whenesday,Friday,Saturday |
 ```
-
+---
 - Complex with array inside object property:  
 Payload:  
 ```json
@@ -95,7 +92,7 @@ Expected Table:
 | Name           | Configurations.IsActive | Configurations.ScheduledDays | LastUpdate |
 | ComplexPayload | True                    | Monday,Saturday,Sunday       | 10/10/2022 |
 ```
-
+---
 - Complex with array, object inside object property:  
 Payload:  
 ```json
