@@ -1,8 +1,7 @@
 [![codecov](https://codecov.io/gh/afborgesDev/SpecFlowPasteJsonAsTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/SpecFlowPasteJsonAsTable)
-**IT IS NOT SPECFLOW OFFICIAL**
 
-# SpecFlowPasteJsonAsTable
-This is a tool that allows pasting a JSON  as a table to the Gherkin Language (Specflow)
+# ConvertJsonToGherkinExampleTable
+This is a tool that allows pasting a JSON  as a table to the Gherkin Language
 
 # Supported type of Json Example:
 
