@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using PasteJsonAsTable.Core.TableConverter;
-using System.Collections.Generic;
 
 namespace PasteJsonAsTable.Core.JsonParser
 {
@@ -19,7 +19,7 @@ namespace PasteJsonAsTable.Core.JsonParser
             return Converter.Convert(dynamicJson);
         }
 
-        private static bool TryParseIntoDynamicJson(string payload, out Dictionary<string, object> json)
+        public static bool TryParseIntoDynamicJson(string payload, out Dictionary<string, object> json)
         {
             json = default;
             try

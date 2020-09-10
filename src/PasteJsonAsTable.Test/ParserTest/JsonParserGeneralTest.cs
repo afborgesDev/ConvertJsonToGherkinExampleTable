@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using PasteJsonAsTable.Core.JsonParser;
+using PasteJsonAsTable.Test.payloads;
 using Xunit;
 
 namespace PasteJsonAsTable.Test.ParserTest
@@ -32,28 +33,40 @@ namespace PasteJsonAsTable.Test.ParserTest
         public void TwhoFieldsJsonShouldParseToTwoColumnsTable()
         {
             var ExpectedTableResult = $"|name|Age|{Environment.NewLine}|this is a test|33|";
-
-            var sut = Parser.Parse("{\"name\":\"this is a test\", \"Age\":33}");
+            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("TwoItemsPayload"));
             AssertValidTable(ExpectedTableResult, sut);
         }
 
         [Fact]
         public void ParseJsonWithArrayInsideShouldReturnValidTableWithListForTheArrayCollumn()
         {
-            const string payload = "{\"name\":\"this is a test\", \"DaysPerWeekWorkOut\":[\"Sunday\", \"Wendsday\", \"Friday\"]}";
             var expectedTable = $"|name|DaysPerWeekWorkOut|{Environment.NewLine}|this is a test|Sunday,Wendsday,Friday|";
-
-            var sut = Parser.Parse(payload);
+            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("SimplePayloadWithArrayProperty"));
             AssertValidTable(expectedTable, sut);
         }
 
         [Fact]
         public void ParseJsonWithInsideSimpleObjectSouldReturnAllItemsFlattedToValidTable()
         {
-            const string payload = "{\"Name\": \"This is a test\", \"Basket\": { \"IsEmpty\": true, \"IsFromRefound\": false }}";
             var expectedTable = $"|Name|Basket.IsEmpty|Basket.IsFromRefound|{Environment.NewLine}|This is a test|True|False|";
+            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("SimplePayloadWithInsideObject"));
+            AssertValidTable(expectedTable, sut);
+        }
 
-            var sut = Parser.Parse(payload);
+        [Fact]
+        public void ParseJsonWithObjectAndArrayShouldReturnAllItemsFlattedToValidTable()
+        {
+            var expectedTable = $"|name|References.IsActive|References.Load|DaysToLoad|{Environment.NewLine}|This is a name|True|90|Monday,Whenesday,Friday,Saturday|";
+            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("SimplePayloadWithObjectAndArray"));
+            AssertValidTable(expectedTable, sut);
+        }
+
+        [Fact]
+        public void ParseComplexJsonWithArrayInsideObjectSouldReturnAllItemsFlattedToValidTable()
+        {
+            var expectedTable = $"|Name|Configurations.IsActive|Configurations.ScheduledDays|LastUpdate|{Environment.NewLine}"
+                              + $"|ComplexPayload|True|Monday,Saturday,Sunday|10/10/2022|";
+            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("ComplexPayloadArrayInsideObject"));
             AssertValidTable(expectedTable, sut);
         }
 

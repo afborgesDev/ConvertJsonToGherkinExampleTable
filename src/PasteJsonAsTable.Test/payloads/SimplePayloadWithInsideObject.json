@@ -1,0 +1,7 @@
+{
+  "name": "This is a test",
+  "Basket": {
+    "IsEmpty": true,
+    "IsFromRefound": false
+  }
+}

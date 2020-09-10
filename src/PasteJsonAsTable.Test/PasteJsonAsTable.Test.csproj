@@ -7,6 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="payloads\ComplexPayloadArrayInsideObject.json" />
+    <None Remove="payloads\SimplePayloadWithArrayProperty.json" />
+    <None Remove="payloads\SimplePayloadWithInsideObject.json" />
+    <None Remove="payloads\SimplePayloadWithObjectAndArray.json" />
+    <None Remove="payloads\TwoItemsPayload.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="payloads\ComplexPayloadArrayInsideObject.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="payloads\SimplePayloadWithInsideObject.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="payloads\SimplePayloadWithArrayProperty.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="payloads\SimplePayloadWithObjectAndArray.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="payloads\TwoItemsPayload.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -22,6 +48,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PasteJsonAsTable.Core\PasteJsonAsTable.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestResults\" />
   </ItemGroup>
 
 </Project>

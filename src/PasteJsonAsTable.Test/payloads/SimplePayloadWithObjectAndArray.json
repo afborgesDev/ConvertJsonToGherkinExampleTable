@@ -1,0 +1,13 @@
+{
+  "name": "This is a name",
+  "References": {
+    "IsActive": true,
+    "Load": 90
+  },
+  "DaysToLoad": [
+    "Monday",
+    "Whenesday",
+    "Friday",
+    "Saturday"
+  ]
+}

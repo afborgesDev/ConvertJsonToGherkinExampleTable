@@ -1,0 +1,12 @@
+{
+  "Name": "ComplexPayload",
+  "Configurations": {
+    "IsActive": true,
+    "ScheduledDays": [
+      "Monday",
+      "Saturday",
+      "Sunday"
+    ]
+  },
+  "LastUpdate": "10/10/2022"
+}
