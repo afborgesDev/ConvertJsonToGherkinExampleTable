@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace PasteJsonAsTable.Core.TableConverter.Resolvers
+namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
 {
     public static class JArrayResolver
     {

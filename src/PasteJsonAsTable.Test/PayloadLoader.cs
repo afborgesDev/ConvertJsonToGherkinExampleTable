@@ -3,11 +3,11 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace PasteJsonAsTable.Test
+namespace ConvertJsonToGherkinExampleTable.Test
 {
     public static class PayloadLoader
     {
-        private const string AssemblyName = "PasteJsonAsTable.Test";
+        private const string AssemblyName = "ConvertJsonToGherkinExampleTable.Test";
 
         public static string GetPayloadAsString(string payloadFile) => ReadFileResource($"payloads.{payloadFile}.json");
 

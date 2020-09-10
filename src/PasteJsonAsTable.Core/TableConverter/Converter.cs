@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PasteJsonAsTable.Core.JsonParser;
-using PasteJsonAsTable.Core.TableConverter.Resolvers;
+using ConvertJsonToGherkinExampleTable.Core.JsonParser;
+using ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers;
 
-namespace PasteJsonAsTable.Core.TableConverter
+namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
 {
     public static class Converter
     {
@@ -63,14 +63,12 @@ namespace PasteJsonAsTable.Core.TableConverter
                 }
 
                 if (valueType.IsJObject())
-                {
                     if (Parser.TryParseIntoDynamicJson(value.ToString(), out var insideJson))
                     {
                         builder.Append(BuildFields(insideJson))
                                .Append(DefaultColumnSeparator);
                         continue;
                     }
-                }
 
                 builder.Append(value.ToString())
                        .Append(DefaultColumnSeparator);

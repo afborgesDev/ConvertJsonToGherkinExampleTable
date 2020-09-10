@@ -1,9 +1,9 @@
 ﻿using System;
+using ConvertJsonToGherkinExampleTable.Core.JsonParser;
 using FluentAssertions;
-using PasteJsonAsTable.Core.JsonParser;
 using Xunit;
 
-namespace PasteJsonAsTable.Test.ParserTest
+namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
 {
     public class JsonParserGeneralTest
     {

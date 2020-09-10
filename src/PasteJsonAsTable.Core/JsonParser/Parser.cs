@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using ConvertJsonToGherkinExampleTable.Core.TableConverter;
 using Newtonsoft.Json;
-using PasteJsonAsTable.Core.TableConverter;
 
-namespace PasteJsonAsTable.Core.JsonParser
+namespace ConvertJsonToGherkinExampleTable.Core.JsonParser
 {
     public static class Parser
     {

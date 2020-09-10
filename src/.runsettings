@@ -9,7 +9,7 @@
             <!-- Match assembly file paths: -->
             <ModulePaths>
               <Include>
-                <ModulePath>.*PasteJsonAsTable.Core.dll</ModulePath>
+                <ModulePath>.*ConvertJsonToGherkinExampleTable.Core.dll</ModulePath>
               </Include>
               <Exclude>
                 <ModulePath>.*Test.dll</ModulePath>
