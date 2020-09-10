@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/afborgesDev/SpecFlowPasteJsonAsTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/SpecFlowPasteJsonAsTable)
+[![codecov](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable)
 
 # ConvertJsonToGherkinExampleTable
 This is a tool that allows pasting a JSON  as a table to the Gherkin Language
