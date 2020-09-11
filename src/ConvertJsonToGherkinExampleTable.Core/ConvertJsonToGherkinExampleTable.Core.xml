@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ConvertJsonToGherkinExampleTable.Core</name>
+    </assembly>
+    <members>
+        <member name="T:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable">
+            <summary>
+            Methods that enable to convert a bunch of json types into table <br/>
+            all documenation here: <see href="https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable"/>
+            </summary>
+        </member>
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable.Convert(System.String)">
+            <summary>
+            Convert a payload into a table with single line
+            </summary>
+            <param name="jsonPayload">The string representation of the json payload</param>
+            <returns>the string representation of the table with headers and fields</returns>
+        </member>
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable.ConvertMultipleIntoSingleTable(System.String[])">
+            <summary>
+            Convert multiple equals json into the same table with multiple lines
+            </summary>
+            <param name="jsonPayloads">the string representation of each json payload</param>
+            <returns>A table with single line of headers and multiple lines of content</returns>
+        </member>
+        <member name="T:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable">
+            <summary>
+            Methods that enable to convert a bunch of json types into table <br/>
+            all documenation here: <see href="https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable"/>
+            </summary>
+        </member>
+        <member name="F:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage">
+            <summary>
+            Default message when couldn't convert the json into a dictionary
+            </summary>
+        </member>
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.Convert(System.String)">
+            <summary>
+            Convert a payload into a table with single line
+            </summary>
+            <param name="jsonPayload">The string representation of the json payload</param>
+            <returns>the string representation of the table with headers and fields</returns>
+        </member>
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.ConvertMultipleIntoSingleTable(System.String[])">
+            <summary>
+            Methods that enable to convert a bunch of json types into table <br/>
+            all documenation here: <see href="https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable"/>
+            </summary>
+        </member>
+    </members>
+</doc>

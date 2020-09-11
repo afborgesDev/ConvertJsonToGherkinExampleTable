@@ -1,5 +1,5 @@
 ﻿using System;
-using ConvertJsonToGherkinExampleTable.Core.JsonParser;
+using ConvertJsonToGherkinExampleTable.Core;
 using FluentAssertions;
 using Xunit;
 
@@ -10,54 +10,50 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         [Fact]
         public void ParseEmptyShouldReturnEmptyResult()
         {
-            var sut = Parser.Parse(string.Empty);
-            sut.Should().BeNullOrEmpty();
+            var sut = GetNewConverter().Convert(string.Empty);
+            sut.Should().Be(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage);
         }
 
         [Fact]
         public void ParseNullShouldReturnEmptyResult()
         {
-            var sut = Parser.Parse(default);
-            sut.Should().BeNullOrEmpty();
+            var sut = GetNewConverter().Convert(default);
+            sut.Should().Be(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage);
         }
 
         [Fact]
         public void PraseJsonWithNoColumnsShouldReturnEmptyResult()
         {
-            var sut = Parser.Parse("{}");
-            sut.Should().Be(Parser.CouldNotConvertJsonIntoTableMessage);
+            var sut = GetNewConverter().Convert("{}");
+            sut.Should().Be(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage);
         }
 
         [Fact]
         public void TwhoFieldsJsonShouldParseToTwoColumnsTable()
         {
-            var ExpectedTableResult = $"|name|Age|{Environment.NewLine}|this is a test|33|";
-            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("TwoItemsPayload"));
-            AssertValidTable(ExpectedTableResult, sut);
+            var expectedTable = $"|name|Age|{Environment.NewLine}|this is a test|33|";
+            ExecuteAndAssert("TwoItemsPayload", expectedTable);
         }
 
         [Fact]
         public void ParseJsonWithArrayInsideShouldReturnValidTableWithListForTheArrayCollumn()
         {
             var expectedTable = $"|name|DaysPerWeekWorkOut|{Environment.NewLine}|this is a test|Sunday,Wendsday,Friday|";
-            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("SimplePayloadWithArrayProperty"));
-            AssertValidTable(expectedTable, sut);
+            ExecuteAndAssert("SimplePayloadWithArrayProperty", expectedTable);
         }
 
         [Fact]
         public void ParseJsonWithInsideSimpleObjectSouldReturnAllItemsFlattedToValidTable()
         {
             var expectedTable = $"|Name|Basket.IsEmpty|Basket.IsFromRefound|{Environment.NewLine}|This is a test|True|False|";
-            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("SimplePayloadWithInsideObject"));
-            AssertValidTable(expectedTable, sut);
+            ExecuteAndAssert("SimplePayloadWithInsideObject", expectedTable);
         }
 
         [Fact]
         public void ParseJsonWithObjectAndArrayShouldReturnAllItemsFlattedToValidTable()
         {
             var expectedTable = $"|name|References.IsActive|References.Load|DaysToLoad|{Environment.NewLine}|This is a name|True|90|Monday,Whenesday,Friday,Saturday|";
-            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("SimplePayloadWithObjectAndArray"));
-            AssertValidTable(expectedTable, sut);
+            ExecuteAndAssert("SimplePayloadWithObjectAndArray", expectedTable);
         }
 
         [Fact]
@@ -65,8 +61,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         {
             var expectedTable = $"|Name|Configurations.IsActive|Configurations.ScheduledDays|LastUpdate|{Environment.NewLine}"
                               + $"|ComplexPayload|True|Monday,Saturday,Sunday|10/10/2022|";
-            var sut = Parser.Parse(PayloadLoader.GetPayloadAsString("ComplexPayloadArrayInsideObject"));
-            AssertValidTable(expectedTable, sut);
+            ExecuteAndAssert("ComplexPayloadArrayInsideObject", expectedTable);
         }
 
         [Fact]
@@ -79,12 +74,12 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
                               + "|ComplexPayload|True|Monday,Saturday,Sunday|10/10/2022|User|Beta|False"
                               + "|2|False|Succeed,Succeed|";
 
-            ExecuteAndAssert(PayloadLoader.GetPayloadAsString("ComplexPayloadMultipleInsideArrayAndObject"), expectedTable);
+            ExecuteAndAssert("ComplexPayloadMultipleInsideArrayAndObject", expectedTable);
         }
 
         private static void ExecuteAndAssert(string payload, string expectedTable)
         {
-            var sut = Parser.Parse(payload);
+            var sut = GetNewConverter().Convert(PayloadLoader.GetPayloadAsString(payload));
             AssertValidTable(expectedTable, sut);
         }
 
@@ -93,5 +88,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
             sut.Should().NotBeNullOrEmpty();
             sut.Should().BeEquivalentTo(ExpectedTableResult);
         }
+
+        private static IJsonConverterToExampleTable GetNewConverter() => new JsonConverterToExampleTable();
     }
 }

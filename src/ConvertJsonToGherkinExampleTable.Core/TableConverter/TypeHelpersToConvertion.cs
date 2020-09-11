@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
 {
-    public static class TypeHelpersToConvertion
+    internal static class TypeHelpersToConvertion
     {
         public static bool IsJArray(this Type type) => type.IsAssignableFrom(typeof(JArray));
 

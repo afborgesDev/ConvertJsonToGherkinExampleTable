@@ -51,10 +51,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PasteJsonAsTable.Core\ConvertJsonToGherkinExampleTable.Core.csproj" />
+    <Folder Include="TestResults\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestResults\" />
+    <ProjectReference Include="..\ConvertJsonToGherkinExampleTable.Core\ConvertJsonToGherkinExampleTable.Core.csproj" />
   </ItemGroup>
 </Project>
