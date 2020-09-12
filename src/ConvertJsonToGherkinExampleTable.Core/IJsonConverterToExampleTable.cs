@@ -11,13 +11,13 @@
         /// </summary>
         /// <param name="jsonPayload">The string representation of the json payload</param>
         /// <returns>the string representation of the table with headers and fields</returns>
-        string Convert(string jsonPayload);
+        string? Convert(string jsonPayload);
 
         /// <summary>
         /// Convert multiple equals json into the same table with multiple lines
         /// </summary>
         /// <param name="jsonPayloads">the string representation of each json payload</param>
         /// <returns>A table with single line of headers and multiple lines of content</returns>
-        string ConvertMultipleIntoSingleTable(params string[] jsonPayloads);
+        string? ConvertMultipleIntoSingleTable(params string[] jsonPayloads);
     }
 }
