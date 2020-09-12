@@ -35,6 +35,11 @@
             Default message when couldn't convert the json into a dictionary
             </summary>
         </member>
+        <member name="F:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable">
+            <summary>
+            Default message when one or more of json to convert into a single table are different.
+            </summary>
+        </member>
         <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.Convert(System.String)">
             <summary>
             Convert a payload into a table with single line

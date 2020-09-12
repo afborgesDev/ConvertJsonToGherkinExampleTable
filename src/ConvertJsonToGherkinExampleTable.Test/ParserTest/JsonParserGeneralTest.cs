@@ -7,6 +7,14 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
 {
     public class JsonParserGeneralTest
     {
+        public static void AssertValidTable(string ExpectedTableResult, string sut)
+        {
+            sut.Should().NotBeNullOrEmpty();
+            sut.Should().BeEquivalentTo(ExpectedTableResult);
+        }
+
+        public static IJsonConverterToExampleTable GetNewConverter() => new JsonConverterToExampleTable();
+
         [Fact]
         public void ParseEmptyShouldReturnEmptyResult()
         {
@@ -82,13 +90,5 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
             var sut = GetNewConverter().Convert(PayloadLoader.GetPayloadAsString(payload));
             AssertValidTable(expectedTable, sut);
         }
-
-        private static void AssertValidTable(string ExpectedTableResult, string sut)
-        {
-            sut.Should().NotBeNullOrEmpty();
-            sut.Should().BeEquivalentTo(ExpectedTableResult);
-        }
-
-        private static IJsonConverterToExampleTable GetNewConverter() => new JsonConverterToExampleTable();
     }
 }
