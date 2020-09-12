@@ -1,6 +1,11 @@
 [![codecov](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable)
 
-# Supported type of Json Example:
+Capabilities:
+  - Convert a single JSON into a single line table
+  - Convert a couple JSON into a multi line table
+    - All JSON must have the same fields number and name
+
+# Supported type of JSON Example:
 
 - Simple:  
 
