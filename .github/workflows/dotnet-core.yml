@@ -17,6 +17,10 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
+    - name: Install Linux dependencies
+      run: |
+        - sudo apt-get update -y
+        - sudo apt-get install -y xclip
     - name: Install dependencies
       run: dotnet restore src/ConvertJsonToGherkinExampleTable.sln
     - name: Build
