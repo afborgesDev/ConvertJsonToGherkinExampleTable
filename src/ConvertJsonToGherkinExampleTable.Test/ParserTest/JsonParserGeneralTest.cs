@@ -7,6 +7,8 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
 {
     public class JsonParserGeneralTest
     {
+        public static readonly string ExpectedTableTwoItemsPayload = $"|name|Age|{Environment.NewLine}|this is a test|33|";
+
         public static void AssertValidTable(string ExpectedTableResult, string sut)
         {
             sut.Should().NotBeNullOrEmpty();
@@ -37,11 +39,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         }
 
         [Fact]
-        public void TwhoFieldsJsonShouldParseToTwoColumnsTable()
-        {
-            var expectedTable = $"|name|Age|{Environment.NewLine}|this is a test|33|";
-            ExecuteAndAssert("TwoItemsPayload", expectedTable);
-        }
+        public void TwhoFieldsJsonShouldParseToTwoColumnsTable() => ExecuteAndAssert("TwoItemsPayload", ExpectedTableTwoItemsPayload);
 
         [Fact]
         public void ParseJsonWithArrayInsideShouldReturnValidTableWithListForTheArrayCollumn()

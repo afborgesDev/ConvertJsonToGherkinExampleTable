@@ -10,6 +10,7 @@
             <ModulePaths>
               <Include>
                 <ModulePath>.*ConvertJsonToGherkinExampleTable.Core.dll</ModulePath>
+                <ModulePath>.*ConvertJsonToGherkinExampleTable.CLI.dll</ModulePath>
               </Include>
               <Exclude>
                 <ModulePath>.*Test.dll</ModulePath>

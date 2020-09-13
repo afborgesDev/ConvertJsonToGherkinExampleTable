@@ -38,7 +38,9 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
+    <PackageReference Include="Moq" Version="4.14.5" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -55,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConvertJsonToGherkinExampleTable.CLI\ConvertJsonToGherkinExampleTable.CLI.csproj" />
     <ProjectReference Include="..\ConvertJsonToGherkinExampleTable.Core\ConvertJsonToGherkinExampleTable.Core.csproj" />
   </ItemGroup>
 </Project>

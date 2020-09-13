@@ -3,6 +3,7 @@ using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
+using System.Diagnostics.CodeAnalysis;
 using ConvertJsonToGherkinExampleTable.CLI.Options;
 using ConvertJsonToGherkinExampleTable.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using TextCopy;
 
 namespace ConvertJsonToGherkinExampleTable.CLI
 {
+    [ExcludeFromCodeCoverage]
     internal class Program
     {
         private static void Main(string[] args) => BuildCommandLine()

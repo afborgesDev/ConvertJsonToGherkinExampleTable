@@ -30,6 +30,8 @@ namespace ConvertJsonToGherkinExampleTable.CLI
 
             if (!string.IsNullOrEmpty(folderPath))
                 ProceedFolderConvertion(folderPath, destinationFolder);
+
+            logger.LogError("Must have the filePath or the folderPath to execute");
         }
 
         private void ProceedFileConvertion(string filePath, string? destinationFolder)
@@ -66,7 +68,8 @@ namespace ConvertJsonToGherkinExampleTable.CLI
         private void SaveResult(string? destinationFolder, string? convertionResult)
         {
             logger.LogInformation("Saving result");
-            if (string.IsNullOrEmpty(convertionResult) || convertionResult.Equals(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(convertionResult) ||
+                convertionResult.Equals(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, StringComparison.InvariantCultureIgnoreCase))
             {
                 logger.LogError("Could not proceed the convertion please check out if the JSON is well formed");
                 return;
@@ -74,8 +77,7 @@ namespace ConvertJsonToGherkinExampleTable.CLI
 
             if (!string.IsNullOrEmpty(destinationFolder))
             {
-                var savePath = Path.Combine(destinationFolder, "convertionResult.txt");
-                File.WriteAllText(savePath, convertionResult);
+                File.WriteAllText(destinationFolder, convertionResult);
                 return;
             }
 
