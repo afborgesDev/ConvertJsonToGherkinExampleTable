@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using ConvertJsonToGherkinExampleTable.CLI;
 using ConvertJsonToGherkinExampleTable.Core;
 using ConvertJsonToGherkinExampleTable.Test.ParserTest;
+using CrawlerWave.LogTestHelper;
+using CrawlerWave.LogTestHelper.Configurations;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -64,6 +67,62 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             }
         }
 
+        [Fact]
+        public void ConvertWithInvalidFileShouldLogErrorAndDontGenerateOutput()
+        {
+            var (sink, convertionService) = CreateServiceWithSink();
+
+            var invalidFilePath = $"_invalid_{Guid.NewGuid()}.json";
+            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
+
+            convertionService.Convert(invalidFilePath, string.Empty, destFilePath);
+            File.Exists(destFilePath).Should().BeFalse();
+            AssertLogMessage(sink, $"Could not find the {invalidFilePath} to proceed the convertion.", LogLevel.Error);
+        }
+
+        [Fact]
+        public void ConvertWithInvalidDirectoryShouldLogErrorAndDontGEnerateOutput()
+        {
+            var (sink, convertionService) = CreateServiceWithSink();
+
+            var invalidfolder = $"_invalid_{Guid.NewGuid()}";
+            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
+
+            convertionService.Convert(string.Empty, invalidfolder, destFilePath);
+            File.Exists(destFilePath).Should().BeFalse();
+            AssertLogMessage(sink, "The origin folder doesn't exist", LogLevel.Error);
+        }
+
+        [Fact]
+        public void BadFormatedInputShouldNotConvert()
+        {
+            var (sink, convertionService) = CreateServiceWithSink();
+
+            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
+            var invalidFile = $"_invalid_{Guid.NewGuid()}.json";
+            File.WriteAllText(invalidFile, "invalid");
+            try
+            {
+                convertionService.Convert(invalidFile, string.Empty, destFilePath);
+                File.Exists(destFilePath).Should().BeFalse();
+                AssertLogMessage(sink, "Could not proceed the convertion please check out if the JSON is well formed", LogLevel.Error);
+            }
+            finally
+            {
+                File.Delete(invalidFile);
+            }
+        }
+
+        private static (ITestSink, ConvertionService) CreateServiceWithSink()
+        {
+            var (sink, logFactory) = LogTestHelperInitialization.Create();
+            var mockLogger = logFactory.CreateLogger<ConvertionService>();
+            var jsonConverter = new JsonConverterToExampleTable();
+            var clipboard = new Mock<Clipboard>();
+            var convertionService = new ConvertionService(mockLogger, jsonConverter, clipboard.Object);
+            return (sink, convertionService);
+        }
+
         private static ConvertionService CreateService()
         {
             var mockLogger = new Mock<ILogger<ConvertionService>>();
@@ -71,5 +130,9 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             var clipBoard = new Clipboard();
             return new ConvertionService(mockLogger.Object, jsonConverter, clipBoard);
         }
+
+        private static void AssertLogMessage(ITestSink sink, string logMesage, LogLevel logLevel) =>
+            sink.Writes.Any(x => x.Message.Contains(logMesage, StringComparison.InvariantCultureIgnoreCase) && x.LogLevel == logLevel)
+                       .Should().BeTrue();
     }
 }
