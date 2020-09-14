@@ -13,17 +13,6 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
 {
     public class GeneralCliTest
     {
-        [Theory]
-        [InlineData("", "", "")]
-        [InlineData(" ", " ", " ")]
-        [InlineData(null, null, null)]
-        public void AllParametersNullShouldNotGenerateOutValue(string? filePath, string? dirPath, string? destPath)
-        {
-            var sut = CreateService();
-            sut.Convert(filePath, dirPath, destPath);
-            AssertClipboard(string.Empty);
-        }
-
         [Fact]
         public void ConvertSingleValidJsonShouldReturnExampleTableToFileDest()
         {
@@ -80,10 +69,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             var mockLogger = new Mock<ILogger<ConvertionService>>();
             var jsonConverter = new JsonConverterToExampleTable();
             var clipBoard = new Clipboard();
-            clipBoard.SetText(string.Empty);
             return new ConvertionService(mockLogger.Object, jsonConverter, clipBoard);
         }
-
-        private static void AssertClipboard(string expected) => new Clipboard().GetText().Should().Be(expected);
     }
 }
