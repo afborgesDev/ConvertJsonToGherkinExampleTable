@@ -2,7 +2,7 @@
   "profiles": {
     "ConvertJsonToGherkinExampleTable.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "--jfl C:\\Users\\alexandre_borges\\Code\\myprojects\\ConvertJsonToGherkinExampleTable\\src\\ConvertJsonToGherkinExampleTable.Test\\payloads\\TwoItemsPayload.json"
+      "commandLineArgs": "--jfl C:\\Users\\alexandre_borges\\Code\\myprojects\\ConvertJsonToGherkinExampleTable\\src\\ConvertJsonToGherkinExampleTable.Test\\payloads\\TwoItemsPayload.json --fromclp"
     }
   }
 }

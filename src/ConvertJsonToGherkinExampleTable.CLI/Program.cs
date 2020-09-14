@@ -36,13 +36,15 @@ namespace ConvertJsonToGherkinExampleTable.CLI
             var root = new RootCommand(@"$ convert the JSON into Example Gherking language"){
                 new Option<string>(new string[]{"--jsonFile", "--jfl" }, "Indicate the complete path to the JSON file to be converted"),
                 new Option<string>(new string[]{ "--jsonFolder", "--jfr" }, "Indicate the folder to the JSON files to be converted"),
-                new Option<string>("--destFolder", "the result folder, if this param won't provide the result will come to Clipboard")
+                new Option<string>("--destFolder", "the result folder, if this param won't provide the result will come to Clipboard"),
+                new Option<bool>(new string[]{"--fromclp", "--fclp" }, "indicate that the payload source should come from the Clipboard")
             };
-            root.Handler = CommandHandler.Create<JsonFileOption, JsonFolderOption, DestinationFolderOption, IHost>(Run);
+            root.Handler = CommandHandler.Create<JsonFileOption, JsonFolderOption, DestinationFolderOption, FromClipboardOption, IHost>(Run);
             return new CommandLineBuilder(root);
         }
 
-        private static void Run(JsonFileOption jsonFileOption, JsonFolderOption jsonFolderOption, DestinationFolderOption destinationFolderOption, IHost host)
+        private static void Run(JsonFileOption jsonFileOption, JsonFolderOption jsonFolderOption,
+            DestinationFolderOption destinationFolderOption, FromClipboardOption fromClipboardOption, IHost host)
         {
             var serviceProvider = host.Services;
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
@@ -53,13 +55,3 @@ namespace ConvertJsonToGherkinExampleTable.CLI
         }
     }
 }
-
-/*
- Behaviour:
-
-Param to indicate:
-    - Json File
-    - Json Folder
-    - Destination file
-
- */
