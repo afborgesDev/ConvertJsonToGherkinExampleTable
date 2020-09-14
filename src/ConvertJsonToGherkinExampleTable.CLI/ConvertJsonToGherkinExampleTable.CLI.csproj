@@ -4,6 +4,19 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <Authors>Alexandre Borges</Authors>
+    <Company />
+    <Product>ConvertJsonToGherkinExampleTable.CLI</Product>
+    <Description>To convert a JSON into a Gherking Example table</Description>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>Gherking</PackageTags>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>JsonToGhTable</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +31,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConvertJsonToGherkinExampleTable.Core\ConvertJsonToGherkinExampleTable.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>
