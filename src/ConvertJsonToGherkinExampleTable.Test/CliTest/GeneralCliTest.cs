@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using ConvertJsonToGherkinExampleTable.CLI;
+using ConvertJsonToGherkinExampleTable.CLI.Options;
 using ConvertJsonToGherkinExampleTable.Core;
 using ConvertJsonToGherkinExampleTable.Test.ParserTest;
 using CrawlerWave.LogTestHelper;
@@ -21,19 +22,20 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         {
             var sut = CreateService();
             var jsonToTest = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
-            var filePathParam = $"example_{Guid.NewGuid()}.json";
-            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
+            var config = ConfigurationBuilder.StartBuild()
+                                             .WithFilePath($"example_{Guid.NewGuid()}.json")
+                                             .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
+                                             .Build();
             try
             {
-                File.WriteAllText(filePathParam, jsonToTest);
-                sut.Convert(filePathParam, default, destFilePath);
-                var result = File.ReadAllText(destFilePath);
+                File.WriteAllText(config.FilePath, jsonToTest);
+                sut.Convert(config);
+                var result = File.ReadAllText(config.ResultFilePath);
                 result.Should().BeEquivalentTo(JsonParserGeneralTest.ExpectedTableTwoItemsPayload);
             }
             finally
             {
-                File.Delete(filePathParam);
-                File.Delete(destFilePath);
+                CleanUpTestScenario(config);
             }
         }
 
@@ -47,23 +49,27 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             var fileFolderGuid = Guid.NewGuid().ToString();
             var originFolder = Path.Combine(Directory.GetCurrentDirectory(), fileFolderGuid);
             Directory.CreateDirectory(originFolder);
-
+            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
             var file1 = Path.Combine(originFolder, $"example1_{Guid.NewGuid()}.json");
             var file2 = Path.Combine(originFolder, $"example2_{Guid.NewGuid()}.json");
-            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
+
+            var config = ConfigurationBuilder.StartBuild()
+                                             .WithFolderPath(originFolder)
+                                             .WithResultFilePath(destFilePath)
+                                             .Build();
+
             try
             {
                 File.WriteAllText(file1, jsonToTest);
                 File.WriteAllText(file2, jsonToTest);
 
-                sut.Convert(default, originFolder, destFilePath);
+                sut.Convert(config);
                 var result = File.ReadAllText(destFilePath);
                 result.Should().BeEquivalentTo(expected);
             }
             finally
             {
-                Directory.Delete(originFolder, true);
-                File.Delete(destFilePath);
+                CleanUpTestScenario(config);
             }
         }
 
@@ -71,25 +77,27 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         public void ConvertWithInvalidFileShouldLogErrorAndDontGenerateOutput()
         {
             var (sink, convertionService) = CreateServiceWithSink();
+            var config = ConfigurationBuilder.StartBuild()
+                                             .WithFilePath($"_invalid_{Guid.NewGuid()}.json")
+                                             .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
+                                             .Build();
 
-            var invalidFilePath = $"_invalid_{Guid.NewGuid()}.json";
-            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
-
-            convertionService.Convert(invalidFilePath, string.Empty, destFilePath);
-            File.Exists(destFilePath).Should().BeFalse();
-            AssertLogMessage(sink, $"Could not find the {invalidFilePath} to proceed the convertion.", LogLevel.Error);
+            convertionService.Convert(config);
+            File.Exists(config.ResultFilePath).Should().BeFalse();
+            AssertLogMessage(sink, $"Could not find the {config.FilePath} to proceed the convertion.", LogLevel.Error);
         }
 
         [Fact]
         public void ConvertWithInvalidDirectoryShouldLogErrorAndDontGEnerateOutput()
         {
             var (sink, convertionService) = CreateServiceWithSink();
+            var config = ConfigurationBuilder.StartBuild()
+                                             .WithFolderPath($"_invalid_{Guid.NewGuid()}")
+                                             .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
+                                             .Build();
 
-            var invalidfolder = $"_invalid_{Guid.NewGuid()}";
-            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
-
-            convertionService.Convert(string.Empty, invalidfolder, destFilePath);
-            File.Exists(destFilePath).Should().BeFalse();
+            convertionService.Convert(config);
+            File.Exists(config.ResultFilePath).Should().BeFalse();
             AssertLogMessage(sink, "The origin folder doesn't exist", LogLevel.Error);
         }
 
@@ -97,19 +105,20 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         public void BadFormatedInputShouldNotConvert()
         {
             var (sink, convertionService) = CreateServiceWithSink();
-
-            var destFilePath = $"destFile_{Guid.NewGuid()}.txt";
-            var invalidFile = $"_invalid_{Guid.NewGuid()}.json";
-            File.WriteAllText(invalidFile, "invalid");
+            var config = ConfigurationBuilder.StartBuild()
+                                             .WithFilePath($"_invalid_{Guid.NewGuid()}.json")
+                                             .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
+                                             .Build();
+            File.WriteAllText(config.FilePath, "invalid");
             try
             {
-                convertionService.Convert(invalidFile, string.Empty, destFilePath);
-                File.Exists(destFilePath).Should().BeFalse();
+                convertionService.Convert(config);
+                File.Exists(config.ResultFilePath).Should().BeFalse();
                 AssertLogMessage(sink, "Could not proceed the convertion please check out if the JSON is well formed", LogLevel.Error);
             }
             finally
             {
-                File.Delete(invalidFile);
+                CleanUpTestScenario(config);
             }
         }
 
@@ -134,5 +143,17 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         private static void AssertLogMessage(ITestSink sink, string logMesage, LogLevel logLevel) =>
             sink.Writes.Any(x => x.Message.Contains(logMesage, StringComparison.InvariantCultureIgnoreCase) && x.LogLevel == logLevel)
                        .Should().BeTrue();
+
+        private static void CleanUpTestScenario(ConvertConfigurations configurations)
+        {
+            if (!string.IsNullOrEmpty(configurations.FilePath))
+                File.Delete(configurations.FilePath);
+
+            if (!string.IsNullOrEmpty(configurations.ResultFilePath))
+                File.Delete(configurations.ResultFilePath);
+
+            if (!string.IsNullOrEmpty(configurations.FolderPath))
+                Directory.Delete(configurations.FolderPath, true);
+        }
     }
 }

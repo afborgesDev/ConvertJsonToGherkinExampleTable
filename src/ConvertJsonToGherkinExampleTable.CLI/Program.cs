@@ -39,19 +39,30 @@ namespace ConvertJsonToGherkinExampleTable.CLI
                 new Option<string>("--destFolder", "the result folder, if this param won't provide the result will come to Clipboard"),
                 new Option<bool>(new string[]{"--fromclp", "--fclp" }, "indicate that the payload source should come from the Clipboard")
             };
-            root.Handler = CommandHandler.Create<JsonFileOption, JsonFolderOption, DestinationFolderOption, FromClipboardOption, IHost>(Run);
+            root.Handler = CommandHandler.Create(
+                (JsonFileOption jsonFileOption, JsonFolderOption jsonFolderOption, DestinationFolderOption destinationFolderOption,
+                 FromClipboardOption fromClipboardOption, IHost host) =>
+                {
+                    var config = ConfigurationBuilder.StartBuild()
+                                                     .WithFilePath(jsonFileOption?.JsonFile)
+                                                     .WithFolderPath(jsonFolderOption?.JsonFolder)
+                                                     .WithResultFilePath(destinationFolderOption?.DestFolder)
+                                                     .WithPayloadFromClipboard(fromClipboardOption?.FromClp)
+                                                     .Build();
+                    Run(config, host);
+                });
+
             return new CommandLineBuilder(root);
         }
 
-        private static void Run(JsonFileOption jsonFileOption, JsonFolderOption jsonFolderOption,
-            DestinationFolderOption destinationFolderOption, FromClipboardOption fromClipboardOption, IHost host)
+        private static void Run(ConvertConfigurations convertConfigurations, IHost host)
         {
             var serviceProvider = host.Services;
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
             var logger = loggerFactory.CreateLogger(typeof(Program));
             logger.LogInformation("Starting the process");
             var convertionService = serviceProvider.GetRequiredService<IConvertionService>();
-            convertionService.Convert(jsonFileOption?.JsonFile, jsonFolderOption?.JsonFolder, destinationFolderOption?.DestFolder);
+            convertionService.Convert(convertConfigurations);
         }
     }
 }

@@ -20,16 +20,22 @@ namespace ConvertJsonToGherkinExampleTable.CLI
             this.clipboard = clipboard;
         }
 
-        public void Convert(string? filePath, string? folderPath, string? destinationFolder)
+        public void Convert(ConvertConfigurations configurations)
         {
-            if (!string.IsNullOrEmpty(filePath))
+            if (configurations is null)
             {
-                ProceedFileConvertion(filePath, destinationFolder);
+                logger.LogError("Should have configurations to convert");
                 return;
             }
 
-            if (!string.IsNullOrEmpty(folderPath))
-                ProceedFolderConvertion(folderPath, destinationFolder);
+            if (!string.IsNullOrEmpty(configurations.FilePath))
+            {
+                ProceedFileConvertion(configurations.FilePath, configurations.ResultFilePath);
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(configurations.FolderPath))
+                ProceedFolderConvertion(configurations.FolderPath, configurations.ResultFilePath);
 
             logger.LogError("Must have the filePath or the folderPath to execute");
         }
