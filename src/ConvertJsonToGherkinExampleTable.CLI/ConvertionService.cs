@@ -28,6 +28,12 @@ namespace ConvertJsonToGherkinExampleTable.CLI
                 return;
             }
 
+            if (configurations.PayloadFromClipboard != null && configurations.PayloadFromClipboard == true)
+            {
+                ProceedFromClipboardConvertion(configurations.ResultFilePath);
+                return;
+            }
+
             if (!string.IsNullOrEmpty(configurations.FilePath))
             {
                 ProceedFileConvertion(configurations.FilePath, configurations.ResultFilePath);
@@ -38,6 +44,13 @@ namespace ConvertJsonToGherkinExampleTable.CLI
                 ProceedFolderConvertion(configurations.FolderPath, configurations.ResultFilePath);
 
             logger.LogError("Must have the filePath or the folderPath to execute");
+        }
+
+        private void ProceedFromClipboardConvertion(string? resultFilePath)
+        {
+            logger.LogInformation("Trying to get the payload from the clipboard");
+            var payload = clipboard.GetText();
+            ConvertAndSave(resultFilePath, payload ?? string.Empty);
         }
 
         private void ProceedFileConvertion(string filePath, string? destinationFolder)
@@ -51,6 +64,11 @@ namespace ConvertJsonToGherkinExampleTable.CLI
             logger.LogInformation("Getting the payload");
             var payload = File.ReadAllText(filePath);
             logger.LogInformation("Convertiong");
+            ConvertAndSave(destinationFolder, payload);
+        }
+
+        private void ConvertAndSave(string? destinationFolder, string payload)
+        {
             var convertionResult = jsonConverterToExampleTable.Convert(payload);
             SaveResult(destinationFolder, convertionResult);
         }

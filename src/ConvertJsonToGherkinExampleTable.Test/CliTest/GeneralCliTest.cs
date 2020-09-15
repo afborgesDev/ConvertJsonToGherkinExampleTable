@@ -122,6 +122,22 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             }
         }
 
+        [Fact]
+        public void ConvertFromValidPayloadOnClipboardShouldGenerateValideExampleTable()
+        {
+            Skip.If(Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX);
+
+            var simplePayload = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
+            new Clipboard().SetText(simplePayload);
+            var convertionService = CreateService();
+            var config = ConfigurationBuilder.StartBuild()
+                                             .WithPayloadFromClipboard(true)
+                                             .Build();
+            convertionService.Convert(config);
+            var result = new Clipboard().GetText();
+            result.Should().BeEquivalentTo(JsonParserGeneralTest.ExpectedTableTwoItemsPayload);
+        }
+
         private static (ITestSink, ConvertionService) CreateServiceWithSink()
         {
             var (sink, logFactory) = LogTestHelperInitialization.Create();
