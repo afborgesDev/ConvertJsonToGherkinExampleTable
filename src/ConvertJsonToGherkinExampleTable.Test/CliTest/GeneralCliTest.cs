@@ -122,7 +122,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             }
         }
 
-        [Fact]
+        [SkippableFact]
         public void ConvertFromValidPayloadOnClipboardShouldGenerateValideExampleTable()
         {
             Skip.If(Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX);
