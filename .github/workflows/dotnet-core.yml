@@ -30,4 +30,19 @@ jobs:
         #token: 
         # Path to coverage file to upload
         file: src/ConvertJsonToGherkinExampleTable.Test/TestResult/**/*.xml
+        
+  buildOnWindows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: dotnet restore src/ConvertJsonToGherkinExampleTable.sln
+      - name: Build
+        run: dotnet build src/ConvertJsonToGherkinExampleTable.Core/ --configuration Release --no-restore
+      - name: Test
+        run: dotnet test src/ConvertJsonToGherkinExampleTable.Test/ --no-restore --collect:"XPlat Code Coverage" --verbosity normal
+      - name: Codecov
+        uses: codecov/codecov-action@v1.0.13
+        with:
+          file: src/ConvertJsonToGherkinExampleTable.Test/TestResult/**/*.xml
 
