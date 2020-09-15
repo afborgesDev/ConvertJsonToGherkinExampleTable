@@ -41,5 +41,7 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"afborgesDev_ConvertJsonToGherkinExampleTable" /o:"afborgesdev-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build src/ConvertJsonToGherkinExampleTable.Core/
+          dotnet restore src/ConvertJsonToGherkinExampleTable.sln
+          dotnet build src/ConvertJsonToGherkinExampleTable.Core/ --no-restore
+          dotnet test src/ConvertJsonToGherkinExampleTable.Test/ --no-restore --collect:"XPlat Code Coverage" --verbosity normal
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
