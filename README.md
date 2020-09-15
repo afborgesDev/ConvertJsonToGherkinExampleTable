@@ -1,4 +1,5 @@
 ![Pipeline](https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable/workflows/.NET%20Core/badge.svg)  
+![CodeQL](https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable/workflows/CodeQL/badge.svg)  
 [![codecov](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable)
 
 Capabilities:
