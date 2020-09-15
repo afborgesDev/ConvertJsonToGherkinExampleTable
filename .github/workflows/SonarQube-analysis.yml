@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   analyze:
-    name: Build
+    name: SonarQube Analyze
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,5 +39,6 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"afborgesDev_ConvertJsonToGherkinExampleTable" /o:"afborgesdev-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          <your build command>
+          dotnet build src/ConvertJsonToGherkinExampleTable.Core/
+          dotnet build src/ConvertJsonToGherkinExampleTable.CLI/
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
