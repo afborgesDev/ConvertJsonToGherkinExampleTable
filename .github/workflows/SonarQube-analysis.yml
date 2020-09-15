@@ -1,10 +1,12 @@
 name: SonarQube Analyze
 on:
   push:
-    branches:
-      - master
+    branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened]
+    # The branches below must be a subset of the branches above
+    branches: [main]
+  schedule:
+    - cron: '0 7 * * 2'
 jobs:
   analyze:
     name: SonarQube Analyze
