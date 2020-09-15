@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [{
+        "label": "build",
+        "command": "dotnet run --project ${workspaceFolder}\\src\\ConvertJsonToGherkinExampleTable.CLI --fromclp",
+        "type": "shell",
+        "options": {
+            "cwd": "${workspaceFolder}",
+            "shell": {
+                "executable": "powershell.exe"
+            }
+        },
+        "group": "build",
+        "presentation": {
+            "reveal": "silent"
+        },
+        "problemMatcher": "$msCompile"
+    }]
+}
