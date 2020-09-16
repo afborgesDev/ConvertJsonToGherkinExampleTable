@@ -19,13 +19,12 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
                     continue;
                 }
 
-                if (valueType.IsJObject())
-                    if (ParseToDictionaryHelper.TryParseToDictionary(value.ToString(), out var insideJson))
-                    {
-                        builder.Append(Resolve(insideJson))
-                               .Append(TableConvertionConstants.DefaultColumnSeparator);
-                        continue;
-                    }
+                if (valueType.IsJObject() && ParseToDictionaryHelper.TryParseToDictionary(value.ToString(), out var insideJson))
+                {
+                    builder.Append(Resolve(insideJson))
+                           .Append(TableConvertionConstants.DefaultColumnSeparator);
+                    continue;
+                }
 
                 builder.Append(value.ToString())
                        .Append(TableConvertionConstants.DefaultColumnSeparator);

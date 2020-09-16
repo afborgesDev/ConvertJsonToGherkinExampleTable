@@ -22,7 +22,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         {
             var sut = CreateService();
             var jsonToTest = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
-            var config = ConfigurationBuilder.StartBuild()
+            var config = ConfigurationBuilder.StartBuild(CreateLoggerForConfigurationBuilder())
                                              .WithFilePath($"example_{Guid.NewGuid()}.json")
                                              .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
                                              .Build();
@@ -53,7 +53,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             var file1 = Path.Combine(originFolder, $"example1_{Guid.NewGuid()}.json");
             var file2 = Path.Combine(originFolder, $"example2_{Guid.NewGuid()}.json");
 
-            var config = ConfigurationBuilder.StartBuild()
+            var config = ConfigurationBuilder.StartBuild(CreateLoggerForConfigurationBuilder())
                                              .WithFolderPath(originFolder)
                                              .WithResultFilePath(destFilePath)
                                              .Build();
@@ -77,7 +77,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         public void ConvertWithInvalidFileShouldLogErrorAndDontGenerateOutput()
         {
             var (sink, convertionService) = CreateServiceWithSink();
-            var config = ConfigurationBuilder.StartBuild()
+            var config = ConfigurationBuilder.StartBuild(CreateLoggerForConfigurationBuilder())
                                              .WithFilePath($"_invalid_{Guid.NewGuid()}.json")
                                              .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
                                              .Build();
@@ -91,7 +91,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         public void ConvertWithInvalidDirectoryShouldLogErrorAndDontGEnerateOutput()
         {
             var (sink, convertionService) = CreateServiceWithSink();
-            var config = ConfigurationBuilder.StartBuild()
+            var config = ConfigurationBuilder.StartBuild(CreateLoggerForConfigurationBuilder())
                                              .WithFolderPath($"_invalid_{Guid.NewGuid()}")
                                              .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
                                              .Build();
@@ -105,7 +105,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
         public void BadFormatedInputShouldNotConvert()
         {
             var (sink, convertionService) = CreateServiceWithSink();
-            var config = ConfigurationBuilder.StartBuild()
+            var config = ConfigurationBuilder.StartBuild(CreateLoggerForConfigurationBuilder())
                                              .WithFilePath($"_invalid_{Guid.NewGuid()}.json")
                                              .WithResultFilePath($"destFile_{Guid.NewGuid()}.txt")
                                              .Build();
@@ -130,7 +130,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             var simplePayload = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
             new Clipboard().SetText(simplePayload);
             var convertionService = CreateService();
-            var config = ConfigurationBuilder.StartBuild()
+            var config = ConfigurationBuilder.StartBuild(CreateLoggerForConfigurationBuilder())
                                              .WithPayloadFromClipboard(true)
                                              .Build();
             convertionService.Convert(config);
@@ -155,6 +155,9 @@ namespace ConvertJsonToGherkinExampleTable.Test.CliTest
             var clipBoard = new Clipboard();
             return new ConvertionService(mockLogger.Object, jsonConverter, clipBoard);
         }
+
+        private static ILogger<ConfigurationBuilder> CreateLoggerForConfigurationBuilder() =>
+            new Mock<ILogger<ConfigurationBuilder>>().Object;
 
         private static void AssertLogMessage(ITestSink sink, string logMesage, LogLevel logLevel) =>
             sink.Writes.Any(x => x.Message.Contains(logMesage, StringComparison.InvariantCultureIgnoreCase) && x.LogLevel == logLevel)

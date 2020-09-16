@@ -5,9 +5,9 @@ namespace ConvertJsonToGherkinExampleTable.Core.JsonParser
 {
     internal static class ParseToDictionaryHelper
     {
-        public static bool TryParseToDictionary(string payload, out Dictionary<string, object> json)
+        public static bool TryParseToDictionary(string? payload, out Dictionary<string, object> json)
         {
-            json = default;
+            json = new Dictionary<string, object>();
 
             if (string.IsNullOrEmpty(payload))
                 return false;
@@ -19,7 +19,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.JsonParser
                     return false;
                 return true;
             }
-            catch
+            catch (JsonException)
             {
                 return false;
             }
