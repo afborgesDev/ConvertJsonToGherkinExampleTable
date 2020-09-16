@@ -85,7 +85,7 @@ namespace ConvertJsonToGherkinExampleTable.CLI
             foreach (var item in Directory.EnumerateFiles(folderPath, "*.json", SearchOption.TopDirectoryOnly))
                 payloads.Add(File.ReadAllText(item));
 
-            var convertionResult = jsonConverterToExampleTable.ConvertMultipleIntoSingleTable(payloads.ToArray());
+            var convertionResult = jsonConverterToExampleTable.ConvertMultipleIntoSingleTable(false, payloads.ToArray());
             SaveResult(destinationFolder, convertionResult);
         }
 

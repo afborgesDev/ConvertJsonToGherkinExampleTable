@@ -12,21 +12,21 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
             var expectedTable = $"|name|Age|{Environment.NewLine}|this is a test|33|{Environment.NewLine}|this is a test|33|";
             var firstJson = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
             var SecondJson = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
-            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(firstJson, SecondJson);
+            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, firstJson, SecondJson);
             JsonParserGeneralTest.AssertValidTable(expectedTable, sut);
         }
 
         [Fact]
         public void ParseEmptyJsonShouldReturnErrorMessage()
         {
-            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(string.Empty, string.Empty);
+            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, string.Empty, string.Empty);
             JsonParserGeneralTest.AssertValidTable(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, sut);
         }
 
         [Fact]
         public void ParseInvalidJsonShouldReturnErrorMessage()
         {
-            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable("{-01", "}{}");
+            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, "{-01", "}{}");
             JsonParserGeneralTest.AssertValidTable(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, sut);
         }
 
@@ -35,7 +35,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         {
             var firstJson = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
             var secondJson = PayloadLoader.GetPayloadAsString("SimplePayloadWithInsideObject");
-            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(firstJson, secondJson);
+            var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, firstJson, secondJson);
             JsonParserGeneralTest.AssertValidTable(JsonConverterToExampleTable.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable, sut);
         }
     }
