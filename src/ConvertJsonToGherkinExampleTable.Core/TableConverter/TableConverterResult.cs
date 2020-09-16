@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConvertJsonToGherkinExampleTable.Core.TableConverter.TableCodeGenerator;
 
 namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
 {
@@ -8,12 +9,23 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
     {
         public string? Headers { get; set; }
         public string? Fields { get; set; }
+        public string? GeneratedCode { get; set; }
 
-        public static TableConverterResult FromHeaderAndFields(string header, string field) => new TableConverterResult { Headers = header, Fields = field };
+        public static TableConverterResult FromHeaderAndFields(string header, string field, bool generateCode = false)
+        {
+            var result = new TableConverterResult { Headers = header, Fields = field };
+            if (generateCode)
+                result.GeneratedCode = CodeGenerator.FromTableConverterResult(result);
 
-        public static TableConverterResult FromHeaderAndListFields(string? header, IEnumerable<string?>? fields)
+            return result;
+        }
+
+        public static TableConverterResult FromHeaderAndListFields(string? header, IEnumerable<string?>? fields, bool generateCode = false)
         {
             var result = new TableConverterResult { Headers = header };
+            if (generateCode)
+                result.GeneratedCode = CodeGenerator.FromTableConverterResult(result);
+
             result.Fields = fields.Aggregate((previous, current) => $"{previous}{Environment.NewLine}{TableConvertionConstants.DefaultColumnSeparator}{current}");
             return result;
         }

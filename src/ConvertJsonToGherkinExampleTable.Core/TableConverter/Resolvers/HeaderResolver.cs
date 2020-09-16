@@ -6,8 +6,6 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
 {
     internal static class HeaderResolver
     {
-        public const string DefaultJoinSymbol = ".";
-
         public static string Resolve(Dictionary<string, object> json)
         {
             var builder = new StringBuilder();
@@ -29,7 +27,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
                         continue;
 
                     builder.Append(key)
-                           .Append(DefaultJoinSymbol)
+                           .Append(TableConvertionConstants.DefaultJoinSymbol)
                            .Append(insideItem)
                            .Append(TableConvertionConstants.DefaultColumnSeparator);
                 }

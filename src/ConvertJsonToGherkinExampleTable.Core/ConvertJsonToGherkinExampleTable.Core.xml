@@ -10,18 +10,20 @@
             all documenation here: <see href="https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable"/>
             </summary>
         </member>
-        <member name="M:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable.Convert(System.String)">
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable.Convert(System.String,System.Boolean)">
             <summary>
             Convert a payload into a table with single line
             </summary>
             <param name="jsonPayload">The string representation of the json payload</param>
+            <param name="generateCode">Indicate that if the convertion should generate a table C# implementation</param>
             <returns>the string representation of the table with headers and fields</returns>
         </member>
-        <member name="M:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable.ConvertMultipleIntoSingleTable(System.String[])">
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable.ConvertMultipleIntoSingleTable(System.Boolean,System.String[])">
             <summary>
             Convert multiple equals json into the same table with multiple lines
             </summary>
             <param name="jsonPayloads">the string representation of each json payload</param>
+            <param name="generateCode">Indicate that if the convertion should generate a table C# implementation</param>
             <returns>A table with single line of headers and multiple lines of content</returns>
         </member>
         <member name="T:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable">
@@ -40,14 +42,15 @@
             Default message when one or more of json to convert into a single table are different.
             </summary>
         </member>
-        <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.Convert(System.String)">
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.Convert(System.String,System.Boolean)">
             <summary>
             Convert a payload into a table with single line
             </summary>
             <param name="jsonPayload">The string representation of the json payload</param>
+            <param name="generateCode">Indicate that if the convertion should generate a table C# implementation</param>
             <returns>the string representation of the table with headers and fields</returns>
         </member>
-        <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.ConvertMultipleIntoSingleTable(System.String[])">
+        <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.ConvertMultipleIntoSingleTable(System.Boolean,System.String[])">
             <summary>
             Methods that enable to convert a bunch of json types into table <br/>
             all documenation here: <see href="https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable"/>
