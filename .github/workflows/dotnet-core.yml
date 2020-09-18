@@ -2,14 +2,22 @@ name: .NET Core
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main 
+      - feature/*
+      - bugfix/*
   pull_request:
-    branches: [ main ]
+    branches: 
+      - main 
+      - feature/*
+      - bugfix/*
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -25,24 +33,5 @@ jobs:
       run: dotnet test src/ConvertJsonToGherkinExampleTable.Test/ --no-restore --collect:"XPlat Code Coverage" --verbosity normal
     - name: Codecov
       uses: codecov/codecov-action@v1.0.13
-      with:
-        # Repository upload token - get it from codecov.io. Required only for private repositories
-        #token: 
-        # Path to coverage file to upload
+      with:        
         file: src/ConvertJsonToGherkinExampleTable.Test/TestResult/**/*.xml
-        
-  buildOnWindows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: dotnet restore src/ConvertJsonToGherkinExampleTable.sln
-      - name: Build
-        run: dotnet build src/ConvertJsonToGherkinExampleTable.Core/ --configuration Release --no-restore
-      - name: Test
-        run: dotnet test src/ConvertJsonToGherkinExampleTable.Test/ --no-restore --collect:"XPlat Code Coverage" --verbosity normal
-      - name: Codecov
-        uses: codecov/codecov-action@v1.0.13
-        with:
-          file: src/ConvertJsonToGherkinExampleTable.Test/TestResult/**/*.xml
-
