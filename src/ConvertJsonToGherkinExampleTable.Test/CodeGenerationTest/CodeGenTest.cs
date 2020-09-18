@@ -10,16 +10,31 @@ namespace ConvertJsonToGherkinExampleTable.Test.CodeGenerationTest
     public class CodeGenTest
     {
         private const int CountFieldsAndCode = 2;
-        private static readonly string ExpectedCodeGenerated = $"using TechTalk.SpecFlow.Assist.Attributes;{Environment.NewLine}{Environment.NewLine}public class AutomaticTableGenerated{Environment.NewLine}{{{Environment.NewLine}{Environment.NewLine}    [TableAliasesAttribute(\"name\")]{Environment.NewLine}    public string? Name {{get; set;}}{Environment.NewLine}{Environment.NewLine}    [TableAliasesAttribute(\"Age\")]\r\n    public string? Age {{get; set;}}{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}}}";
-        private static readonly string ExpectedNormalizedwithAttribute = $"using TechTalk.SpecFlow.Assist.Attributes;{Environment.NewLine}{Environment.NewLine}public class AutomaticTableGenerated{Environment.NewLine}{{{Environment.NewLine}{Environment.NewLine}    [TableAliasesAttribute(\"name\")]{Environment.NewLine}    public string? Name {{get; set;}}{Environment.NewLine}{Environment.NewLine}    [TableAliasesAttribute(\"Basket.IsEmpty\")]{Environment.NewLine}    public string? IsEmpty {{get; set;}}{Environment.NewLine}{Environment.NewLine}    [TableAliasesAttribute(\"Basket.IsFromRefound\")]{Environment.NewLine}    public string? IsFromRefound {{get; set;}}{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}}}";
+
         private static readonly string SeparatorIdentify = $"{Environment.NewLine}**CODE:**";
+
+        private static readonly string[] ExpectedSimpleCode = new string[] {"using TechTalk.SpecFlow.Assist.Attributes;",
+                                                                            "public class AutomaticTableGenerated",
+                                                                            "[TableAliasesAttribute(\"name\")]",
+                                                                            "public string? Name {get; set;}",
+                                                                            "[TableAliasesAttribute(\"Age\")]",
+                                                                            "public string? Age {get; set;}"};
+
+        private static readonly string[] ExpectedNormalizedwithAttribute = new string[] {"using TechTalk.SpecFlow.Assist.Attributes",
+                                                                                         "public class AutomaticTableGenerated",
+                                                                                         "[TableAliasesAttribute(\"name\")]",
+                                                                                         "public string? Name {get; set;}",
+                                                                                         "[TableAliasesAttribute(\"Basket.IsEmpty\")]",
+                                                                                         "public string? IsEmpty {get; set;}",
+                                                                                         "[TableAliasesAttribute(\"Basket.IsFromRefound\")]",
+                                                                                         "public string? IsFromRefound {get; set;}"};
 
         [Fact]
         public void SimpleConvertionWithCodeGenOptionShouldCreateTableAndCodeOutput()
         {
             var sut = new JsonConverterToExampleTable();
             var convertionResult = sut.Convert(PayloadLoader.GetPayloadAsString("TwoItemsPayload"), true);
-            AssertConvertionResult(convertionResult, JsonParserGeneralTest.ExpectedTableTwoItemsPayload, ExpectedCodeGenerated);
+            AssertConvertionResult(convertionResult, JsonParserGeneralTest.ExpectedTableTwoItemsPayload, ExpectedSimpleCode);
         }
 
         [Fact]
@@ -30,20 +45,21 @@ namespace ConvertJsonToGherkinExampleTable.Test.CodeGenerationTest
             AssertConvertionResult(convertionResult, JsonParserGeneralTest.SimplePayloadWithInsideObjectExpectedTable, ExpectedNormalizedwithAttribute);
         }
 
-        private static void AssertConvertionResult(string convertionResult, string expectedTable, string expectedCode)
+        private static void AssertConvertionResult(string convertionResult, string expectedTable, string[] expectedCode)
         {
             convertionResult.Should().NotBeNullOrEmpty();
             var items = convertionResult.Split(SeparatorIdentify);
             items.Count().Should().Be(CountFieldsAndCode);
 
             var foundTable = items.Any(x => x.Equals(expectedTable, StringComparison.InvariantCultureIgnoreCase));
-            var foundCode = items.Any(x => x.Contains(expectedCode, StringComparison.InvariantCultureIgnoreCase));
+            var foundCode = items[1];
+
+            foreach (var item in expectedCode)
+                foundCode.Contains(item, StringComparison.InvariantCultureIgnoreCase).Should().BeTrue($"expected to have: {item}");
 
             foundTable.Should().BeTrue(convertionResult);
-            foundCode.Should().BeTrue($"Expected: {expectedCode} Found: {convertionResult}");
         }
 
-        //Test with . separator
         //Test multiple
     }
 }
