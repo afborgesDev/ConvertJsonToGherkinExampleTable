@@ -10,5 +10,13 @@ Capabilities:
     - All JSON must have the same fields number and name
   - Convert a JSON from clipboard
 
+Usage:
+```bash
+dotnet tool install --global ConvertJsonToGherkinExampleTable.CLI --version 1.0.0
+```
+
+```bash
+convertjstogh -h
+```
 
 To see examples of supported JSON and general documentation go to [Wiki](https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable/wiki/)
