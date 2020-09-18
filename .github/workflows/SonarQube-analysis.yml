@@ -40,7 +40,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |          
-          echo $Env:GITHUB_WORKSPACE 
           echo ${{GITHUB_WORKSPACE}}
           ls ${{GITHUB_WORKSPACE}}
           
