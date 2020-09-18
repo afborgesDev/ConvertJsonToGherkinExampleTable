@@ -30,8 +30,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
             return result;
         }
 
-        public override string? ToString() =>
-            CleanCovertedText($"{TableConvertionConstants.DefaultColumnSeparator}{Headers}{Environment.NewLine}{TableConvertionConstants.DefaultColumnSeparator}{Fields}");
+        public override string? ToString() => CreateResultString();
 
         private static string CleanCovertedText(string text)
         {
@@ -40,6 +39,14 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
 
             return temp.Replace($"{TableConvertionConstants.DefaultColumnSeparator}{TableConvertionConstants.DefaultColumnSeparator}",
                                    TableConvertionConstants.DefaultColumnSeparator, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        private string CreateResultString()
+        {
+            var convertionResult = CleanCovertedText($"{TableConvertionConstants.DefaultColumnSeparator}{Headers}{Environment.NewLine}{TableConvertionConstants.DefaultColumnSeparator}{Fields}");
+            if (!string.IsNullOrEmpty(GeneratedCode))
+                convertionResult += $"{Environment.NewLine}**CODE:** {GeneratedCode}";
+            return convertionResult;
         }
     }
 }

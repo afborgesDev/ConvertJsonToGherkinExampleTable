@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.TableCodeGenerato
     internal static class CodeGenerator
     {
         private const string DefaultPaddingProperty = "    ";
+        private const int FirstLetterIndex = 0;
         private static readonly Index LastIndex = ^1;
 
         public static string? FromTableConverterResult(TableConverterResult? tableConverterResult)
@@ -39,13 +41,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.TableCodeGenerato
             return resultList;
         }
 
-        private static string NormalizeHeader(string header)
-        {
-            if (string.IsNullOrEmpty(header) || header.IndexOf(TableConvertionConstants.DefaultJoinSymbol, StringComparison.InvariantCultureIgnoreCase) == 0)
-                return header;
-
-            return header.Split(TableConvertionConstants.DefaultJoinSymbol)[LastIndex];
-        }
+        private static string NormalizeHeader(string header) => header.Split(TableConvertionConstants.DefaultJoinSymbol)[LastIndex];
 
         private static string TransformToStringPayload(Dictionary<string, string>? pairProperties)
         {
@@ -55,9 +51,11 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.TableCodeGenerato
             var builder = new StringBuilder();
             builder.Append("using TechTalk.SpecFlow.Assist.Attributes;")
                    .Append(Environment.NewLine)
+                   .Append(Environment.NewLine)
                    .Append("public class AutomaticTableGenerated")
                    .Append(Environment.NewLine)
                    .Append("{")
+                   .Append(Environment.NewLine)
                    .Append(Environment.NewLine);
 
             foreach (var (propName, headerAttribute) in pairProperties)
@@ -65,21 +63,23 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.TableCodeGenerato
                 builder.Append(DefaultPaddingProperty)
                        .Append("[TableAliasesAttribute(\"")
                        .Append(headerAttribute)
-                       .Append("\"]")
+                       .Append("\")]")
                        .Append(Environment.NewLine)
                        .Append(DefaultPaddingProperty)
-                       .Append("public string? ") //Should convert to a different type?
-                       .Append(propName)
+                       .Append("public string? ")
+                       .Append(CapitalizeString(propName))
                        .Append(" ")
                        .Append("{get; set;}")
+                       .Append(Environment.NewLine)
                        .Append(Environment.NewLine);
             }
 
-            builder.Append("}");
+            builder.Append(Environment.NewLine)
+                   .Append("}");
 
             return builder.ToString();
         }
+
+        private static string CapitalizeString(string text) => $"{char.ToUpper(text[FirstLetterIndex], CultureInfo.InvariantCulture)}{text[1..]}";
     }
 }
-
-//$"|name|Age|{Environment.NewLine}|this is a test|33|";

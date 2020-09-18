@@ -8,6 +8,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
     public class JsonParserGeneralTest
     {
         public static readonly string ExpectedTableTwoItemsPayload = $"|name|Age|{Environment.NewLine}|this is a test|33|";
+        public static readonly string SimplePayloadWithInsideObjectExpectedTable = $"|Name|Basket.IsEmpty|Basket.IsFromRefound|{Environment.NewLine}|This is a test|True|False|";
 
         public static void AssertValidTable(string ExpectedTableResult, string sut)
         {
@@ -49,11 +50,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         }
 
         [Fact]
-        public void ParseJsonWithInsideSimpleObjectSouldReturnAllItemsFlattedToValidTable()
-        {
-            var expectedTable = $"|Name|Basket.IsEmpty|Basket.IsFromRefound|{Environment.NewLine}|This is a test|True|False|";
-            ExecuteAndAssert("SimplePayloadWithInsideObject", expectedTable);
-        }
+        public void ParseJsonWithInsideSimpleObjectSouldReturnAllItemsFlattedToValidTable() => ExecuteAndAssert("SimplePayloadWithInsideObject", SimplePayloadWithInsideObjectExpectedTable);
 
         [Fact]
         public void ParseJsonWithObjectAndArrayShouldReturnAllItemsFlattedToValidTable()

@@ -15,7 +15,7 @@
     <PackageTags>Gherking</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>JsonToGhTable</ToolCommandName>
+    <ToolCommandName>convertJsToGh</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
