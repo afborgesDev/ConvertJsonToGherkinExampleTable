@@ -40,7 +40,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.CodeGenerationTest
             var foundCode = items.Any(x => x.Contains(expectedCode, StringComparison.InvariantCultureIgnoreCase));
 
             foundTable.Should().BeTrue(convertionResult);
-            foundCode.Should().BeTrue(convertionResult);
+            foundCode.Should().BeTrue($"Expected: {expectedCode} Found: {convertionResult}");
         }
 
         //Test with . separator
