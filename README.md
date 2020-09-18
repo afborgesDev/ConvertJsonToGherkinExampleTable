@@ -2,6 +2,7 @@
 ![CodeQL](https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable/workflows/CodeQL/badge.svg)  
 [![codecov](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable/branch/main/graph/badge.svg)](https://codecov.io/gh/afborgesDev/ConvertJsonToGherkinExampleTable)  
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=afborgesDev_ConvertJsonToGherkinExampleTable&metric=alert_status)](https://sonarcloud.io/dashboard?id=afborgesDev_ConvertJsonToGherkinExampleTable)  
+![Nuget](https://img.shields.io/nuget/v/ConvertJsonToGherkinExampleTable.CLI)
 
 Capabilities:
   - Convert a single JSON into a single line table
