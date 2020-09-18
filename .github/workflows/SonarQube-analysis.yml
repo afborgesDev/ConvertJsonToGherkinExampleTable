@@ -44,7 +44,7 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"afborgesDev_ConvertJsonToGherkinExampleTable" /o:"afborgesdev-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="${{ env.workspace }}\src\ConvertJsonToGherkinExampleTable.Test\coverage.opencover.xml"
           dotnet restore src/ConvertJsonToGherkinExampleTable.sln
           dotnet build src/ConvertJsonToGherkinExampleTable.Core/ --no-restore
-          dotnet test src/ConvertJsonToGherkinExampleTable.Test/ --logger trx /p:Exclude=[xunit.*]* /p:CollectCoverage=true "/p:CoverletOutputFormat=\"cobertura,opencover\""
+          dotnet test src/ConvertJsonToGherkinExampleTable.Test/ /p:CollectCoverage=true /p:CoverletOutputFormat=opencover          
           ls "${{env.workspace}}\src\"
           ls "${{env.workspace}}\src\ConvertJsonToGherkinExampleTable.Test"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
