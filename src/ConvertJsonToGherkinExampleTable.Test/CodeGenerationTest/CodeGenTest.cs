@@ -39,8 +39,8 @@ namespace ConvertJsonToGherkinExampleTable.Test.CodeGenerationTest
             var foundTable = items.Any(x => x.Equals(expectedTable, StringComparison.InvariantCultureIgnoreCase));
             var foundCode = items.Any(x => x.Contains(expectedCode, StringComparison.InvariantCultureIgnoreCase));
 
-            foundTable.Should().BeTrue();
-            foundCode.Should().BeTrue();
+            foundTable.Should().BeTrue(convertionResult);
+            foundCode.Should().BeTrue(convertionResult);
         }
 
         //Test with . separator
