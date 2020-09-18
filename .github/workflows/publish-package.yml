@@ -25,3 +25,4 @@ jobs:
           PROJECT_FILE_PATH: src/ConvertJsonToGherkinExampleTable.CLI/ConvertJsonToGherkinExampleTable.CLI.csproj
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
           INCLUDE_SYMBOLS: true
+          
