@@ -41,6 +41,6 @@ jobs:
         shell: powershell
         run: |          
           ls ${{GitHub.GITHUB_WORKSPACE}}
-          cd ${{GitHub.GITHUB_WORKSPACE}}\src
-          ls ${{GitHub.GITHUB_WORKSPACE}}\src\ConvertJsonToGherkinExampleTable.Test
+          cd ${{GitHub.GITHUB_WORKSPACE}}/src
+          ls ${{GitHub.GITHUB_WORKSPACE}}/src/ConvertJsonToGherkinExampleTable.Test
           
