@@ -1,0 +1,27 @@
+name: Publish Package
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:  
+  build:    
+    runs-on: ubuntu-latest
+        
+    steps:      
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Install dependencies
+        run: dotnet restore src/ConvertJsonToGherkinExampleTable.sln
+      - name: Build
+        run: dotnet build src/ConvertJsonToGherkinExampleTable.CLI/ --configuration Release --no-restore  
+      - name: Publish to Nuget
+        uses: brandedoutcast/publish-nuget@v2.5.2
+        with:
+          PROJECT_FILE_PATH: src/ConvertJsonToGherkinExampleTable.CLI/ConvertJsonToGherkinExampleTable.CLI.csproj
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          INCLUDE_SYMBOLS: true
