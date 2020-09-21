@@ -12,16 +12,6 @@ namespace ConvertJsonToGherkinExampleTable.Core
     public sealed class JsonConverterToExampleTable : IJsonConverterToExampleTable
     {
         /// <summary>
-        /// Default message when couldn't convert the json into a dictionary
-        /// </summary>
-        public const string CouldNotConvertJsonIntoTableMessage = "Could not convert the Json into a Table";
-
-        /// <summary>
-        /// Default message when one or more of json to convert into a single table are different.
-        /// </summary>
-        public const string AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable = "All JSON should have the same field names to convert into a single table";
-
-        /// <summary>
         /// Convert a payload into a table with single line
         /// </summary>
         /// <param name="jsonPayload">The string representation of the json payload</param>
@@ -30,7 +20,7 @@ namespace ConvertJsonToGherkinExampleTable.Core
         public string? Convert(string jsonPayload, bool generateCode = false)
         {
             if (!ParseToDictionaryHelper.TryParseToDictionary(jsonPayload, out var parsedJson))
-                return CouldNotConvertJsonIntoTableMessage;
+                return GeneralMessages.CouldNotConvertJsonIntoTableMessage;
 
             return Converter.Convert(parsedJson, generateCode).ToString();
         }
@@ -46,7 +36,7 @@ namespace ConvertJsonToGherkinExampleTable.Core
             foreach (var payload in jsonPayloads)
             {
                 if (!ParseToDictionaryHelper.TryParseToDictionary(payload, out var parsedJson))
-                    return CouldNotConvertJsonIntoTableMessage;
+                    return GeneralMessages.CouldNotConvertJsonIntoTableMessage;
 
                 var convertResult = Converter.Convert(parsedJson);
                 convertResultList.Add(convertResult);
@@ -60,7 +50,7 @@ namespace ConvertJsonToGherkinExampleTable.Core
             var header = converterResults.Select(x => x.Headers).First();
 
             if (converterResults.Any(x => x.Headers != header))
-                return AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable;
+                return GeneralMessages.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable;
 
             var fields = converterResults.Select(x => x.Fields);
             var mainResult = TableConverterResult.FromHeaderAndListFields(header, fields, generateCode);

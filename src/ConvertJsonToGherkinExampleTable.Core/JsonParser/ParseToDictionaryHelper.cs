@@ -5,6 +5,8 @@ namespace ConvertJsonToGherkinExampleTable.Core.JsonParser
 {
     internal static class ParseToDictionaryHelper
     {
+        private const int NoItems = 0;
+
         public static bool TryParseToDictionary(string? payload, out Dictionary<string, object> json)
         {
             json = new Dictionary<string, object>();
@@ -15,9 +17,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.JsonParser
             try
             {
                 json = JsonConvert.DeserializeObject<Dictionary<string, object>>(payload);
-                if (json.Count == 0)
-                    return false;
-                return true;
+                return json.Count > NoItems;
             }
             catch (JsonException)
             {

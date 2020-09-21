@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using ConvertJsonToGherkinExampleTable.Core.Common;
 using ConvertJsonToGherkinExampleTable.Core.JsonParser;
 
 namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
@@ -11,9 +12,7 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
             var builder = new StringBuilder();
             foreach (var (key, value) in json)
             {
-                var valueType = value.GetType();
-
-                if (!valueType.IsJObject())
+                if (!value.GetType().IsJObject())
                 {
                     builder.Append(key).Append(TableConvertionConstants.DefaultColumnSeparator);
                     continue;
@@ -21,19 +20,27 @@ namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers
 
                 _ = ParseToDictionaryHelper.TryParseToDictionary(value.ToString(), out var insideJson);
                 var objectReduceResult = Resolve(insideJson).Split(TableConvertionConstants.DefaultColumnSeparator);
-                foreach (var insideItem in objectReduceResult)
-                {
-                    if (string.IsNullOrEmpty(insideItem))
-                        continue;
-
-                    builder.Append(key)
-                           .Append(TableConvertionConstants.DefaultJoinSymbol)
-                           .Append(insideItem)
-                           .Append(TableConvertionConstants.DefaultColumnSeparator);
-                }
+                ReduceInsideItem(key, objectReduceResult, ref builder);
             }
 
             return builder.ToString();
+        }
+
+        private static void ReduceInsideItem(string key, string[]? objectReduceResult, ref StringBuilder builder)
+        {
+            if (objectReduceResult is null)
+                return;
+
+            foreach (var insideItem in objectReduceResult)
+            {
+                if (string.IsNullOrEmpty(insideItem))
+                    continue;
+
+                builder.Append(key)
+                       .Append(TableConvertionConstants.DefaultJoinSymbol)
+                       .Append(insideItem)
+                       .Append(TableConvertionConstants.DefaultColumnSeparator);
+            }
         }
     }
 }

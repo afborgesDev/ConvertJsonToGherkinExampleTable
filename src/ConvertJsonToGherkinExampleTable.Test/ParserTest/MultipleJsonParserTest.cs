@@ -1,5 +1,5 @@
 ﻿using System;
-using ConvertJsonToGherkinExampleTable.Core;
+using ConvertJsonToGherkinExampleTable.Test.Common;
 using Xunit;
 
 namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
@@ -13,21 +13,21 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
             var firstJson = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
             var SecondJson = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
             var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, firstJson, SecondJson);
-            JsonParserGeneralTest.AssertValidTable(expectedTable, sut);
+            CommonTestsHelper.AssertValidTable(expectedTable, sut);
         }
 
         [Fact]
         public void ParseEmptyJsonShouldReturnErrorMessage()
         {
             var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, string.Empty, string.Empty);
-            JsonParserGeneralTest.AssertValidTable(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, sut);
+            CommonTestsHelper.AssertValidTable(GeneralConstants.CouldNotConvertJsonIntoTableMessage, sut);
         }
 
         [Fact]
         public void ParseInvalidJsonShouldReturnErrorMessage()
         {
             var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, "{-01", "}{}");
-            JsonParserGeneralTest.AssertValidTable(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, sut);
+            CommonTestsHelper.AssertValidTable(GeneralConstants.CouldNotConvertJsonIntoTableMessage, sut);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
             var firstJson = PayloadLoader.GetPayloadAsString("TwoItemsPayload");
             var secondJson = PayloadLoader.GetPayloadAsString("SimplePayloadWithInsideObject");
             var sut = JsonParserGeneralTest.GetNewConverter().ConvertMultipleIntoSingleTable(false, firstJson, secondJson);
-            JsonParserGeneralTest.AssertValidTable(JsonConverterToExampleTable.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable, sut);
+            CommonTestsHelper.AssertValidTable(GeneralConstants.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable, sut);
         }
     }
 }

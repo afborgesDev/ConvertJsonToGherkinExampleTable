@@ -4,6 +4,32 @@
         <name>ConvertJsonToGherkinExampleTable.Core</name>
     </assembly>
     <members>
+        <member name="T:ConvertJsonToGherkinExampleTable.Core.GeneralMessages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:ConvertJsonToGherkinExampleTable.Core.GeneralMessages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:ConvertJsonToGherkinExampleTable.Core.GeneralMessages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:ConvertJsonToGherkinExampleTable.Core.GeneralMessages.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable">
+            <summary>
+              Looks up a localized string similar to All JSON should have the same field names to convert into a single table.
+            </summary>
+        </member>
+        <member name="P:ConvertJsonToGherkinExampleTable.Core.GeneralMessages.CouldNotConvertJsonIntoTableMessage">
+            <summary>
+              Looks up a localized string similar to Could not convert the Json into a Table.
+            </summary>
+        </member>
         <member name="T:ConvertJsonToGherkinExampleTable.Core.IJsonConverterToExampleTable">
             <summary>
             Methods that enable to convert a bunch of json types into table <br/>
@@ -30,16 +56,6 @@
             <summary>
             Methods that enable to convert a bunch of json types into table <br/>
             all documenation here: <see href="https://github.com/afborgesDev/ConvertJsonToGherkinExampleTable"/>
-            </summary>
-        </member>
-        <member name="F:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage">
-            <summary>
-            Default message when couldn't convert the json into a dictionary
-            </summary>
-        </member>
-        <member name="F:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.AllJsonsShouldHaveSameFieldNamsToConvertMultipleIntoOneTable">
-            <summary>
-            Default message when one or more of json to convert into a single table are different.
             </summary>
         </member>
         <member name="M:ConvertJsonToGherkinExampleTable.Core.JsonConverterToExampleTable.Convert(System.String,System.Boolean)">

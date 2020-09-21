@@ -9,6 +9,7 @@ namespace ConvertJsonToGherkinExampleTable.CLI
 {
     public class ConvertionService : IConvertionService
     {
+        private const string CouldNotConvertJsonIntoTableMessage = "Could not convert the Json into a Table";
         private readonly ILogger<ConvertionService> logger;
         private readonly IJsonConverterToExampleTable jsonConverterToExampleTable;
         private readonly IClipboard clipboard;
@@ -93,7 +94,7 @@ namespace ConvertJsonToGherkinExampleTable.CLI
         {
             logger.LogInformation("Saving result");
             if (string.IsNullOrEmpty(convertionResult) ||
-                convertionResult.Equals(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage, StringComparison.InvariantCultureIgnoreCase))
+                convertionResult.Equals(CouldNotConvertJsonIntoTableMessage, StringComparison.InvariantCultureIgnoreCase))
             {
                 logger.LogError("Could not proceed the convertion please check out if the JSON is well formed");
                 return;
