@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using ConvertJsonToGherkinExampleTable.Core.Common;
 using ConvertJsonToGherkinExampleTable.Core.JsonParser;
 
 namespace ConvertJsonToGherkinExampleTable.Core.TableConverter.Resolvers

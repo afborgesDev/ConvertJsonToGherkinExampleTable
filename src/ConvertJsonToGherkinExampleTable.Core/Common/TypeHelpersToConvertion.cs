@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
 
-namespace ConvertJsonToGherkinExampleTable.Core.TableConverter
+namespace ConvertJsonToGherkinExampleTable.Core.Common
 {
     internal static class TypeHelpersToConvertion
     {

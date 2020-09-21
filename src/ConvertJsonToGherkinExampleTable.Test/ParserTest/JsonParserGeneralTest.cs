@@ -1,5 +1,6 @@
 ﻿using System;
 using ConvertJsonToGherkinExampleTable.Core;
+using ConvertJsonToGherkinExampleTable.Test.Common;
 using FluentAssertions;
 using Xunit;
 
@@ -10,33 +11,27 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         public static readonly string ExpectedTableTwoItemsPayload = $"|name|Age|{Environment.NewLine}|this is a test|33|";
         public static readonly string SimplePayloadWithInsideObjectExpectedTable = $"|Name|Basket.IsEmpty|Basket.IsFromRefound|{Environment.NewLine}|This is a test|True|False|";
 
-        public static void AssertValidTable(string ExpectedTableResult, string sut)
-        {
-            sut.Should().NotBeNullOrEmpty();
-            sut.Should().BeEquivalentTo(ExpectedTableResult);
-        }
-
         public static IJsonConverterToExampleTable GetNewConverter() => new JsonConverterToExampleTable();
 
         [Fact]
         public void ParseEmptyShouldReturnEmptyResult()
         {
             var sut = GetNewConverter().Convert(string.Empty);
-            sut.Should().Be(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage);
+            sut.Should().Be(GeneralConstants.CouldNotConvertJsonIntoTableMessage);
         }
 
         [Fact]
         public void ParseNullShouldReturnEmptyResult()
         {
             var sut = GetNewConverter().Convert(default);
-            sut.Should().Be(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage);
+            sut.Should().Be(GeneralConstants.CouldNotConvertJsonIntoTableMessage);
         }
 
         [Fact]
         public void PraseJsonWithNoColumnsShouldReturnEmptyResult()
         {
             var sut = GetNewConverter().Convert("{}");
-            sut.Should().Be(JsonConverterToExampleTable.CouldNotConvertJsonIntoTableMessage);
+            sut.Should().Be(GeneralConstants.CouldNotConvertJsonIntoTableMessage);
         }
 
         [Fact]
@@ -83,7 +78,7 @@ namespace ConvertJsonToGherkinExampleTable.Test.ParserTest
         private static void ExecuteAndAssert(string payload, string expectedTable)
         {
             var sut = GetNewConverter().Convert(PayloadLoader.GetPayloadAsString(payload));
-            AssertValidTable(expectedTable, sut);
+            CommonTestsHelper.AssertValidTable(expectedTable, sut);
         }
     }
 }
