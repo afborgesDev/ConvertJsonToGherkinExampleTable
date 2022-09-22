@@ -26,7 +26,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20427.1" />
-    <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.20427.1" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.21216.1" />
   </ItemGroup>
 
   <ItemGroup>
